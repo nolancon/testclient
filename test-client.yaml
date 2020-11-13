@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-client
+  namespace: default
+spec:
+  containers:
+  - image: testclient:latest
+    imagePullPolicy: IfNotPresent
+    name: test-client
+    volumeMounts:
+    - mountPath: /var/lib/kubelet/pod-resources/kubelet.sock
+      name: socket
+      mountPropagation: HostToContainer
+  volumes:
+  - name: socket
+    hostPath:
+      path: /var/lib/kubelet/pod-resources/kubelet.sock     
